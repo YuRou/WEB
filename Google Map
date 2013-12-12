@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+
+    <title>Google Maps JavaScript API v3 Example: Polyline Simple</title>
+    <link href="/maps/documentation/javascript/examples/default.css" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script>
+
+//座標
+      var a= new google.maps.LatLng(24.984493,121.342369);//桃園校區
+      var b= new google.maps.LatLng(25.019050,121.401629);//龍華科大
+      var c= new google.maps.LatLng(25.018801,121.408721);//迴龍
+      var d= new google.maps.LatLng(25.031288,121.420426);//丹鳳
+      var e= new google.maps.LatLng(25.035144,121.432404);//輔仁大學
+      var f= new google.maps.LatLng(25.035820,121.451992);//新莊國中
+      var g= new google.maps.LatLng(25.045177, 121.469003);//湯城
+      var h= new google.maps.LatLng(25.059050,121.491675);//菜寮
+      var i= new google.maps.LatLng(25.091075,121.559834);//台北車站
+      var j= new google.maps.LatLng(25.086158,121.528282);//台北校區
+
+//公車到站時間
+      var a1= "<b>桃園校區</b><br>公車到站時間<br>10:10, 12:10, 14:50, 15:50, 16:00, 16:50, 16:55, 17:00, 17:50, 19:00, 20:00, 21:45";//桃園校區
+      var b1= "<b>龍華科大</b><br>公車到站時間<br>10:20, 12:20, 15:05, 16:05, 16:15, 17:05, 17:10, 17:15, 18:05, 19:15, 20:15, 22:00";//龍華科大
+      var c1= "<b>迴龍</b><br>公車到站時間<br>10:10, 12:10, 14:50, 15:50, 16:00, 16:50, 16:55, 17:00, 17:50, 19:00, 20:00, 21:45";//迴龍
+      var d1= "<b>丹鳳</b><br>公車到站時間<br>10:30, 12:30, 15:15, 16:15, 16:25, 17:15, 17:20, 17:25, 18:15, 19:25, 20:25, 22:10";//丹鳳
+      var e1= "<b>輔仁大學</b><br>公車到站時間<br>10:35, 12:35, 15:20, 16:20, 16:30, 17:20, 17:25, 17:30, 18:20, 20:30, 22:15";//輔仁大學
+      var f1= "<b>新莊國中</b><br>公車到站時間<br>10:45, 12:45, 15:30, 16:30, 16:40, 17:30, 17:35, 17:40, 18:30, 20:40, 22:25";//新莊國中
+      var g1= "<b>湯城</b><br>公車到站時間<br>10:55, 12:55, 15:40, 16:40, 16:50, 17:40, 17:45, 17:50, 18:40, 20:50, 22:35";//湯城
+      var h1= "<b>菜寮</b><br>公車到站時間<br>11:05, 13:05, 15:50, 16:45, 16:55, 17:45, 17:50, 17:55, 18:45, 21:00, 22:45";//菜寮
+      var i1= "<b>台北車站</b><br>公車到站時間<br>11:10, 13:10, 15:55, 16:55, 17:05, 17:55, 18:00, 18:05, 18:55, 21:10, 22:55";//台北車跕
+      var j1= "<b>台北校區</b><br>公車到站時間";//台北校區
+
+
+
+
+
+      function initialize()
+      {
+
+	var mycenter = new google.maps.LatLng(25.039882, 121.433258 );
+
+        var mapOptions = {
+          zoom: 11,
+          center: mycenter,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        var map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+
+//打點
+        marker1 = new google.maps.Marker({
+          map:map,
+          animation: google.maps.Animation.DROP,
+          position: a
+        });
+
+        marker2 = new google.maps.Marker({
+          map:map,
+          animation: google.maps.Animation.DROP,
+          position: b
+        });
+
+        marker3 = new google.maps.Marker({
+          map:map,
+          animation: google.maps.Animation.DROP,
+          position: c
+        });
+
+        marker4 = new google.maps.Marker({
+          map:map,
+          animation: google.maps.Animation.DROP,
+          position: d
+        });
+
+        marker5 = new google.maps.Marker({
+          map:map,
+          animation: google.maps.Animation.DROP,
+          position: e
+        });
+
+        marker6 = new google.maps.Marker({
+          map:map,
+          animation: google.maps.Animation.DROP,
+          position: f
+        });
+
+        marker7 = new google.maps.Marker({
+          map:map,
+          animation: google.maps.Animation.DROP,
+          position: g
+        });
+
+        marker8 = new google.maps.Marker({
+          map:map,
+          animation: google.maps.Animation.DROP,
+          position: h
+        });
+
+        marker9 = new google.maps.Marker({
+          map:map,
+          animation: google.maps.Animation.DROP,
+          position: i
+        });
+
+        marker10 = new google.maps.Marker({
+          map:map,
+          animation: google.maps.Animation.DROP,
+          position: j
+        });
+
+
+//動畫函數起點
+	var ShuttleBus= [a,b,c,d,e,f,g,h,i,j];
+
+	var lineSymbol = {
+	    path: google.maps.SymbolPath.CIRCLE,
+	    scale: 8,
+	    strokeColor: '#393'
+	  };
+
+	  line = new google.maps.Polyline({
+	    path: ShuttleBus,
+	    icons: [{icon: lineSymbol,offset: '100%'}],map: map});
+	
+//新增一個點擊觸發條件
+	google.maps.event.addListener(line, 'click', showArrays);
+	infowindow = new google.maps.InfoWindow();
+	function showArrays(event) {
+	  var vertices = this.getPath();
+	  var contentString = '<b>學生專車路徑</b><br>';
+	  // Replace our Info Window's content and position
+	  infowindow.setContent(contentString);
+	  infowindow.setPosition(event.latLng);
+	  infowindow.open(map);
+	}
+//結束觸發事件
+
+      var infowindow = new google.maps.InfoWindow();
+
+//顯示資訊與街景圖
+      google.maps.event.addListener(marker1,'click',function(){infowindow.setContent(a1);infowindow.open(map,marker1);panoShow(map,a)});
+      google.maps.event.addListener(marker2,'click',function(){infowindow.setContent(b1);infowindow.open(map,marker2);panoShow(map,b)});
+      google.maps.event.addListener(marker3,'click',function(){infowindow.setContent(c1);infowindow.open(map,marker3);panoShow(map,c)});
+      google.maps.event.addListener(marker4,'click',function(){infowindow.setContent(d1);infowindow.open(map,marker4);panoShow(map,d)});
+      google.maps.event.addListener(marker5,'click',function(){infowindow.setContent(e1);infowindow.open(map,marker5);panoShow(map,e)});
+      google.maps.event.addListener(marker6,'click',function(){infowindow.setContent(f1);infowindow.open(map,marker6);panoShow(map,f)});
+      google.maps.event.addListener(marker7,'click',function(){infowindow.setContent(g1);infowindow.open(map,marker7);panoShow(map,g)});
+      google.maps.event.addListener(marker8,'click',function(){infowindow.setContent(h1);infowindow.open(map,marker8);panoShow(map,h)});
+      google.maps.event.addListener(marker9,'click',function(){infowindow.setContent(i1);infowindow.open(map,marker9);panoShow(map,i)});
+      google.maps.event.addListener(marker10,'click',function(){infowindow.setContent(j1);infowindow.open(map,marker10);panoShow(map,j)});
+
+}
+
+	function panoShow(map, pos){
+          var panoOptions = {
+            position: pos,
+            pov: {heading: 50,pitch: -10}
+          };
+          var pano = new google.maps.StreetViewPanorama(document.getElementById('panorama'), panoOptions);
+          map.setStreetView(pano);
+        }
+
+	function animateCircle() {
+	   var count = 0;
+	   offsetId = window.setInterval(function() {
+	      count = (count + 1) % 200;
+	      var icons = line.get('icons');
+	      icons[0].offset = (count / 2) + '%';
+	      line.set('icons', icons);},20);
+	   }
+        
+
+</script>
+</head>
+<body onload="initialize();animateCircle()"> 
+<div id="map_canvas" style="width: 800px; height: 300px;">map div</div>
+<div id="panorama" style="position:absolute; left:10px; top: 310px; width: 800px; height: 300px;"></div>
+</body>
+</html>
